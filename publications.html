@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Publications</title>
+
+<style>
+body { font-family: Arial; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #f2f2f2;
+}
+
+tr:hover {
+  background: #eef;
+  cursor: pointer;
+}
+
+#detail {
+  margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a> |
+  <a href="bibliography.html">Bibliography</a> |
+  <a href="publications.html">Publications</a>
+</nav>
+
+<h1>Publications</h1>
+
+<input type="text" id="search" placeholder="Search...">
+
+<br><br>
+
+<table id="pubTable">
+<tr>
+  <th>PUB ID</th>
+  <th>TITLE</th>
+  <th>AUTHORS</th>
+  <th>YEAR</th>
+  <th>LANGUAGE</th>
+  <th>SOURCE</th>
+</tr>
+
+<tr onclick="showDetail(0)">
+  <td>1</td>
+  <td>Glücksvorstellungen: Ein Rückgriff in die Geschichte der Soziologie</td>
+  <td>Bellebaum, A.</td>
+  <td>2000</td>
+  <td>German</td>
+  <td>Journal Example</td>
+</tr>
+
+<tr onclick="showDetail(1)">
+  <td>2</td>
+  <td>Example Publication Title</td>
+  <td>Smith, J.</td>
+  <td>2021</td>
+  <td>English</td>
+  <td>Another Source</td>
+</tr>
+
+</table>
+
+<div id="detail"></div>
+
+<script>
+
+// detail data (volledig, alle kolommen)
+const data = [
+{
+  "PUB ID": "1",
+  "TITLE": "Glücksvorstellungen: Ein Rückgriff in die Geschichte der Soziologie",
+  "AUTHORS": "Bellebaum, A.",
+  "YEAR": "2000",
+  "LANGUAGE": "German",
+  "SOURCE": "Journal Example",
+  "DOI": "10.1234/example",
+  "REMARKS": "Example remark"
+},
+{
+  "PUB ID": "2",
+  "TITLE": "Example Publication Title",
+  "AUTHORS": "Smith, J.",
+  "YEAR": "2021",
+  "LANGUAGE": "English",
+  "SOURCE": "Another Source",
+  "DOI": "",
+  "REMARKS": ""
+}
+];
+
+function showDetail(index) {
+  const row = data[index];
+
+  let html = "<h2>Detail</h2><table>";
+
+  for (let key in row) {
+    html += "<tr>";
+    html += "<th>" + key + "</th>";
+    html += "<td>" + row[key] + "</td>";
+    html += "</tr>";
+  }
+
+  html += "</table>";
+
+  document.getElementById("detail").innerHTML = html;
+}
+
+// eenvoudige zoekfunctie
+document.getElementById("search").addEventListener("keyup", function() {
+  const filter = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#pubTable tr");
+
+  rows.forEach((row, i) => {
+    if (i === 0) return; // header overslaan
+
+    const text = row.innerText.toLowerCase();
+    row.style.display = text.includes(filter) ? "" : "none";
+  });
+});
+
+</script>
+
+</body>
+</html>
