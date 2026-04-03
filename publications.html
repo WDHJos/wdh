@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Publications</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="bibliography.html">Bibliography</a>
+  <a href="publications.html">Publications</a>
+</nav>
+
+<h1>Publications</h1>
+
+<input type="text" id="search" placeholder="Search publications...">
+
+<table id="table"></table>
+
+<script>
+let tableData = [];
+
+fetch("publications.csv")
+  .then(res => res.text())
+  .then(text => {
+    const rows = text.trim().split("\n").map(r => r.split(","));
+    const headers = rows[0];
+    tableData = rows.slice(1);
+
+    renderTable(headers, tableData);
+
+    document.getElementById("search").addEventListener("keyup", function() {
+      const value = this.value.toLowerCase();
+      const filtered = tableData.filter(row =>
+        row.join(" ").toLowerCase().includes(value)
+      );
+      renderTable(headers, filtered);
+    });
+  });
+
+function renderTable(headers, rows) {
+  let html = "<tr>";
+  headers.forEach(h => html += `<th>${h}</th>`);
+  html += "</tr>";
+
+  rows.forEach(row => {
+    html += "<tr>";
+    row.forEach(cell => html += `<td>${cell}</td>`);
+    html += "</tr>";
+  });
+
+  document.getElementById("table").innerHTML = html;
+}
+</script>
+
+</body>
+</html>
