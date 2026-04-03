@@ -23,9 +23,17 @@
 let tableData = [];
 
 fetch("publications.csv")
-  .then(res => res.text())
+  .then(response => response.text())
   .then(text => {
-    const rows = text.trim().split("\n").map(r => r.split(","));
+
+    const delimiter = text.includes(";") ? ";" : ",";
+
+    const lines = text.trim().split("\n");
+
+    const rows = lines.map(line => {
+      return line.split(delimiter).map(cell => cell.replace(/^"|"$/g, ""));
+    });
+
     const headers = rows[0];
     tableData = rows.slice(1);
 
@@ -38,16 +46,20 @@ fetch("publications.csv")
       );
       renderTable(headers, filtered);
     });
+
   });
 
 function renderTable(headers, rows) {
   let html = "<tr>";
-  headers.forEach(h => html += `<th>${h}</th>`);
+
+  headers.forEach(h => html += "<th>" + h + "</th>");
   html += "</tr>";
 
   rows.forEach(row => {
     html += "<tr>";
-    row.forEach(cell => html += `<td>${cell}</td>`);
+    row.forEach(cell => {
+      html += "<td>" + cell + "</td>";
+    });
     html += "</tr>";
   });
 
