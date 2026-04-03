@@ -2,15 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Publications</title>
+  <title>Bibliography of Happiness</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    table {
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-  </style>
 </head>
 <body>
 
@@ -20,59 +13,33 @@
   <a href="publications.html">Publications</a>
 </nav>
 
-<h1>Publications</h1>
+<h1>Bibliography of Happiness</h1>
 
-<input type="text" id="search" placeholder="Search publications...">
+<p>
+This bibliography contains scientific publications on happiness,
+defined as the subjective enjoyment of life as a whole.
+</p>
 
-<table id="table"></table>
+<h2>Scope</h2>
+<ul>
+  <li>Scientific publications on life satisfaction</li>
+  <li>Includes journal articles, books, dissertations</li>
+  <li>Excludes mental health and domain satisfaction studies</li>
+</ul>
 
-<script>
-let tableData = [];
+<h2>Coverage</h2>
+<ul>
+  <li>Approximately 15,000 publications</li>
+  <li>Social sciences literature up to 2019</li>
+  <li>Languages: English, German, Dutch</li>
+</ul>
 
-fetch("publications.csv")
-  .then(response => response.text())
-  .then(text => {
-
-    // automatisch delimiter bepalen (; of ,)
-    const delimiter = text.includes(";") ? ";" : ",";
-
-    const rows = text.trim().split("\n").map(row => row.split(delimiter));
-
-    const headers = rows[0];
-    tableData = rows.slice(1);
-
-    renderTable(headers, tableData);
-
-    document.getElementById("search").addEventListener("keyup", function() {
-      const value = this.value.toLowerCase();
-      const filtered = tableData.filter(row =>
-        row.join(" ").toLowerCase().includes(value)
-      );
-      renderTable(headers, filtered);
-    });
-
-  });
-
-function renderTable(headers, rows) {
-  let html = "<tr>";
-
-  headers.forEach(header => {
-    html += "<th>" + header + "</th>";
-  });
-
-  html += "</tr>";
-
-  rows.forEach(row => {
-    html += "<tr>";
-    row.forEach(cell => {
-      html += "<td>" + cell + "</td>";
-    });
-    html += "</tr>";
-  });
-
-  document.getElementById("table").innerHTML = html;
-}
-</script>
+<h2>Classification</h2>
+<ul>
+  <li>By subject (about 450 categories)</li>
+  <li>By time: past, present, future</li>
+  <li>By type of happiness measured</li>
+</ul>
 
 </body>
 </html>
