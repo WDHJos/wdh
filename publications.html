@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Publications</title>
+
+<style>
+body {
+  font-family: Arial;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 12px;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: left;
+  vertical-align: top;
+
+  /* BELANGRIJK: tekst afbreken */
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+th {
+  background: #f2f2f2;
+  position: sticky;
+  top: 0;
+}
+
+/* kolombreedtes sturen */
+td:nth-child(1), th:nth-child(1) {
+  width: 70px;
+}
+
+td:nth-child(2), th:nth-child(2) {
+  width: 300px; /* TITLE */
+}
+
+td:nth-child(3), th:nth-child(3) {
+  width: 200px; /* AUTHORS */
+}
+
+td:nth-child(6), th:nth-child(6) {
+  width: 200px; /* SOURCE */
+}
+
+/* overige kolommen iets smaller */
+td, th {
+  min-width: 100px;
+}
+
+/* scroll indien nodig */
+.table-container {
+  overflow-x: auto;
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a> |
+  <a href="bibliography.html">Bibliography</a> |
+  <a href="publications.html">Publications</a>
+</nav>
+
+<h1>Publications</h1>
+
+<div class="table-container">
+
+<table id="pubTable">
+
+<tr>
+  <th>PUB ID</th>
+  <th>TITLE</th>
+  <th>AUTHORS</th>
+  <th>YEAR PUB</th>
+  <th>LANGUAGE</th>
+  <th>SOURCE</th>
+  <th>URL</th>
+  <th>DOI</th>
+  <th>TEXTFILE</th>
+  <th>DATE IN</th>
+  <th>REMARKS</th>
+  <th>DETERMINANT</th>
+  <th>CONCEQUENCE</th>
+  <th>HEDONIC</th>
+  <th>CONTENT</th>
+  <th>CONTAINS DATA</th>
+  <th>Subject_1</th>
+  <th>Subject_2</th>
+  <th>Subject_3</th>
+  <th>Subject_4</th>
+  <th>Subject_5</th>
+  <th>Subject_6</th>
+  <th>Subject_7</th>
+  <th>Subject_8</th>
+  <th>Subject_9</th>
+  <th>Subject_10</th>
+  <th>Control_Subject_1</th>
+</tr>
+
+<!-- voorbeeld rij -->
+<tr>
+  <td>1</td>
+  <td>Glücksvorstellungen: Ein Rückgriff in die Geschichte der Soziologie</td>
+  <td>Bellebaum, A.</td>
+  <td>2000</td>
+  <td>German</td>
+  <td>Example Source</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>
