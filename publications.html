@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Publications</title>
+
+<style>
+body {
+  font-family: Arial;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 12px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: left;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* compacte schuine headers */
+th {
+  height: 90px;
+  vertical-align: bottom;
+  background: #f2f2f2;
+  position: sticky;
+  top: 0;
+  padding: 2px 4px;
+}
+
+th span {
+  display: inline-block;
+  transform: rotate(-40deg);
+  transform-origin: left bottom;
+  white-space: nowrap;
+}
+
+/* kolombreedtes */
+th:nth-child(1), td:nth-child(1) { width: 50px; }   /* PUB ID */
+th:nth-child(2), td:nth-child(2) { width: 260px; }  /* TITLE */
+th:nth-child(3), td:nth-child(3) { width: 160px; }  /* AUTHORS */
+th:nth-child(4), td:nth-child(4) { width: 65px; }   /* YEAR */
+th:nth-child(6), td:nth-child(6) { width: 160px; }  /* SOURCE */
+
+/* laatste kolommen compact */
+th:nth-child(n+9), td:nth-child(n+9) {
+  width: 70px;
+  text-align: center;
+}
+
+/* scroll */
+.table-container {
+  overflow-x: auto;
+}
+
+/* popup */
+#popup {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  max-height: 80%;
+  overflow: auto;
+  background: white;
+  border: 2px solid black;
+  padding: 20px;
+  z-index: 1000;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a> |
+  <a href="bibliography.html">Bibliography</a> |
+  <a href="publications.html">Publications</a>
+</nav>
+
+<h1>Publications</h1>
+
+<input type="text" id="search" placeholder="Search...">
+
+<br><br>
+
+<div class="table-container">
+
+<table id="pubTable">
+
+<tr>
+  <th><span>PUB ID</span></th>
+  <th><span>TITLE</span></th>
+  <th><span>AUTHORS</span></th>
+  <th><span>YEAR</span></th>
+  <th><span>LANGUAGE</span></th>
+  <th><span>SOURCE</span></th>
+  <th><span>URL</span></th>
+  <th><span>DOI</span></th>
+  <th><span>OVERALL</span></th>
+  <th><span>DETERMINANT</span></th>
+  <th><span>CONCEQUENCE</span></th>
+  <th><span>HEDONIC</span></th>
+  <th><span>CONTENT</span></th>
+  <th><span>CONTAINS DATA</span></th>
+</tr>
+
+<tr onclick="showDetail(0)">
+  <td>1</td>
+  <td>Glücksvorstellungen: Ein Rückgriff in die Geschichte der Soziologie</td>
+  <td>Bellebaum, A.</td>
+  <td>2000</td>
+  <td>German</td>
+  <td>Example Source</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- popup -->
+<div id="overlay" onclick="closePopup()"></div>
+
+<div id="popup">
+  <button onclick="closePopup()">Close</button>
+  <div id="detailContent"></div>
+</div>
+
+<script>
+
+// detail data (hier komen later ALLE kolommen uit Excel)
+const data = [
+{
+  "PUB ID": "1",
+  "TITLE": "Glücksvorstellungen: Ein Rückgriff in die Geschichte der Soziologie",
+  "AUTHORS": "Bellebaum, A.",
+  "YEAR PUB": "2000",
+  "LANGUAGE": "German",
+  "SOURCE": "Example Source",
+  "URL": "",
+  "DOI": "",
+  "TEXTFILE": "",
+  "DATE IN": "",
+  "REMARKS": "",
+  "DETERMINANT": "",
+  "CONCEQUENCE": "",
+  "HEDONIC": "",
+  "CONTENT": "",
+  "CONTAINS DATA": "",
+  "Subject_1": "",
+  "Subject_2": ""
+}
+];
+
+function showDetail(index) {
+  const row = data[index];
+
+  let html = "<table>";
+
+  for (let key in row) {
+    html += "<tr><th>" + key + "</th><td>" + row[key] + "</td></tr>";
+  }
+
+  html += "</table>";
+
+  document.getElementById("detailContent").innerHTML = html;
+  document.getElementById("popup").style.display = "block";
+  document.getElementById("overlay").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+  document.getElementById("overlay").style.display = "none";
+}
+
+// zoekfunctie
+document.getElementById("search").addEventListener("keyup", function() {
+  const filter = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#pubTable tr");
+
+  rows.forEach((row, i) => {
+    if (i === 0) return;
+    const text = row.innerText.toLowerCase();
+    row.style.display = text.includes(filter) ? "" : "none";
+  });
+});
+
+</script>
+
+</body>
+</html>
