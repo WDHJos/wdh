@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Publications</title>
+
+<style>
+body { font-family: Arial, sans-serif; }
+
+table {
+  border-collapse: collapse;
+  font-size: 12px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: left;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+th {
+  background: #f2f2f2;
+  position: sticky;
+  top: 0;
+}
+
+/* verticale headers */
+th.vert {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  height: 110px;
+  width: 36px;
+  text-align: center;
+  padding: 2px;
+}
+
+/* kolombreedtes */
+th:nth-child(1), td:nth-child(1) { width: 36px; }
+th:nth-child(2), td:nth-child(2) { width: 260px; }
+th:nth-child(3), td:nth-child(3) { width: 160px; }
+th:nth-child(4), td:nth-child(4) { width: 45px; }
+th:nth-child(5), td:nth-child(5) { width: 70px; }
+th:nth-child(6), td:nth-child(6) { width: 160px; }
+th:nth-child(7), td:nth-child(7) { width: 55px; }
+th:nth-child(8), td:nth-child(8) { width: 55px; }
+
+/* compacte kolommen */
+th:nth-child(n+9), td:nth-child(n+9) {
+  width: 40px;
+  text-align: center;
+}
+
+th:nth-child(17), td:nth-child(17) {
+  width: 60px;
+}
+
+.table-container { overflow-x: auto; }
+
+/* popup */
+#popup {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  max-height: 80%;
+  overflow: auto;
+  background: white;
+  border: 2px solid black;
+  padding: 16px;
+  z-index: 1000;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+</style>
+</head>
+
+<body>
+
+<h1>Publications</h1>
+
+<input type="text" id="search" placeholder="Search...">
+<br><br>
+
+<div class="table-container">
+
+<table id="pubTable">
+
+<thead>
+<tr>
+  <th class="vert">PUB ID</th>
+  <th>TITLE</th>
+  <th>AUTHORS</th>
+  <th>YEAR</th>
+  <th>LANGUAGE</th>
+  <th>SOURCE</th>
+  <th>URL</th>
+  <th>DOI</th>
+
+  <th class="vert">TEXTFILE</th>
+  <th class="vert">DATE IN</th>
+  <th class="vert">REMARKS</th>
+  <th class="vert">OVERALL</th>
+  <th class="vert">DETERMINANT</th>
+  <th class="vert">CONCEQUENCE</th>
+  <th class="vert">HEDONIC</th>
+  <th class="vert">CONTENT</th>
+  <th class="vert">CONTS DATA</th>
+</tr>
+</thead>
+
+<tbody id="dataRows">
+</tbody>
+
+</table>
+</div>
+
+<div id="overlay" onclick="closePopup()"></div>
+
+<div id="popup">
+  <button onclick="closePopup()">Close</button>
+  <div id="detailContent"></div>
+</div>
+
+<script>
+fetch("publication.csv")
+  .then(response => response.text())
+  .then(text => {
+
+    // BELANGRIJK: kies hier , of ;
+    const rows = text.trim().split("\n").map(r => r.split(";"));
+
+    const tbody = document.getElementById("dataRows");
+
+    for (let i = 1; i < rows.length; i++) {
+      const r = rows[i];
+
+      let tr = document.createElement("tr");
+      tr.onclick = () => showDetail(i-1);
+
+      for (let j = 0; j <= 16; j++) {
+        let td = document.createElement("td");
+        td.textContent = r[j] || "";
+        tr.appendChild(td);
+      }
+
+      tbody.appendChild(tr);
+    }
+
+    window.tableData = rows.slice(1);
+  });
+
+function showDetail(index) {
+  const row = window.tableData[index];
+
+  const headers = [
+    "PUB ID","TITLE","AUTHORS","YEAR PUB","LANGUAGE","SOURCE","URL","DOI",
+    "TEXTFILE","DATE IN","REMARKS","OVERALL","DETERMINANT","CONCEQUENCE",
+    "HEDONIC","CONTENT","CONTAINS DATA"
+  ];
+
+  let html = "<table>";
+
+  for (let i = 0; i < headers.length; i++) {
+    html += "<tr><th>" + headers[i] + "</th><td>" + (row[i] || "") + "</td></tr>";
+  }
+
+  html += "</table>";
+
+  document.getElementById("detailContent").innerHTML = html;
+  document.getElementById("popup").style.display = "block";
+  document.getElementById("overlay").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+  document.getElementById("overlay").style.display = "none";
+}
+
+document.getElementById("search").addEventListener("keyup", function() {
+  const filter = this.value.toLowerCase();
+  const rows = document.querySelectorAll("#dataRows tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    row.style.display = text.includes(filter) ? "" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
