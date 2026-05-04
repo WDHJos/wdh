@@ -3,12 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Bibliography of Happiness</title>
+
 <style>
 body { font-family: Arial; margin:0; background:#f4f6f8; }
-header { background:#002b5c; color:white; padding:20px; }
-.menu { background:#cfe8ff; padding:10px; display:flex; gap:20px; }
-.menu a { text-decoration:none; color:#003366; font-weight:bold; }
-.container { padding:20px; max-width:900px; }
+
+header { 
+  background:#002b5c; 
+  color:white; 
+  padding:20px; 
+}
+
+/* MENU */
+.menu { 
+  position: sticky;
+  top: 0;
+  background:#cfe8ff; 
+  padding:10px; 
+  display:flex; 
+  gap:20px;
+  z-index:1000;
+}
+
+.menu a { 
+  text-decoration:none; 
+  color:#003366; 
+  font-weight:bold; 
+}
+
+/* CONTENT */
+.container { 
+  padding:20px; 
+  max-width:900px; 
+}
+
 h2 { margin-top:20px; }
 </style>
 </head>
@@ -20,9 +47,9 @@ h2 { margin-top:20px; }
 </header>
 
 <div class="menu">
-<a href="https://wdhjos.github.io/wdh/index.html">Home</a>
-<a href="bibliography.html">Bibliography</a>
-<a href="publications.html">Publications</a>
+<a href="index.html">HOME</a>
+<a href="bibliography.html">BIBLIOGRAPHY</a>
+<a href="publications.html">PUBLICATIONS</a>
 </div>
 
 <div class="container">
