@@ -1,0 +1,94 @@
+WDH AI INSTRUCTIONS
+
+These instructions apply to all AI-assisted processing of publications for the World Database of Happiness (WDH) bibliography.
+
+Before any coding, classification, subject selection, abstract summary, or WDH Notation Form completion, the uploaded publication must first be checked for possible duplication within the WDH bibliography.
+
+1. EXTRACT PUBLICATION METADATA
+
+From the uploaded publication PDF, identify whenever available:
+
+- Title
+- Authors
+- Publication year
+- DOI
+- Journal, book, thesis, report, working paper, conference paper, or other source type
+- URL
+
+Use information from the uploaded publication itself whenever possible.
+
+2. MANDATORY DUPLICATION CHECK
+
+Before performing any further processing, search the current WDH bibliography for possible duplicates.
+
+Use the following WDH bibliography sources:
+
+https://raw.githubusercontent.com/WDHJos/wdh/main/wdh_duplicate_check.csv
+
+https://raw.githubusercontent.com/WDHJos/wdh/main/publications_data.js
+
+Compare using:
+
+1. DOI
+2. Exact title
+3. Similar title
+4. First author
+5. Publication year
+
+3. REPORT DUPLICATION RESULT
+
+Return one of the following conclusions:
+
+A. ALREADY PRESENT
+
+Provide:
+
+- Pub_ID
+- Title
+- Authors
+- Year
+
+B. POSSIBLE DUPLICATE
+
+Provide:
+
+- Matching publication or publications
+- Similarity explanation
+- Pub_ID if available
+
+C. NOT FOUND
+
+State that no matching publication was found.
+
+4. CONTINUE ONLY IF NOT ALREADY PRESENT
+
+Only continue with further WDH processing when the duplication check has been completed.
+
+Further WDH processing may include:
+
+- Subject selection
+- Category coding
+- WDH Notation Form completion
+- Abstract summarization
+- Source description
+- Other bibliographic processing
+
+5. WDH SOURCE RULE
+
+Use information from the uploaded publication whenever possible.
+
+Do not replace missing information with information from unrelated publications.
+
+If information cannot be verified from the uploaded publication, report this explicitly.
+
+6. SUBJECT SELECTION
+
+Subject Descriptions may only be selected from the official WDH subject list supplied by the user.
+
+Do not invent new Subject IDs or Subject Descriptions.
+
+7. OUTPUT RULE
+
+The duplication result must always be shown before any other WDH processing output.
+
+END OF WDH AI INSTRUCTIONS
