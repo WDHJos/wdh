@@ -293,6 +293,7 @@
   <a href="index.html">HOME</a>
   <a href="bibliography.html">BIBLIOGRAPHY</a>
   <a href="publications.html" class="active">PUBLICATIONS</a>
+  <a href="subjects.html">SUBJECTS</a>
 </nav>
 
 <main class="page">
@@ -392,6 +393,7 @@ function updateStickyColumns() {
   document.documentElement.style.setProperty('--sticky-col1-width', Math.ceil(firstHeader.getBoundingClientRect().width) + 'px');
 }
 let sortCriteria = [{col: "PubId", dir: "asc"}];
+let selectedSubjectsFromUrl = [];
 function sortMarkForHeader(h) {
   const index = sortCriteria.findIndex(c => c.col === h);
   if (index === -1) return ` <span class="sort-hint">↕</span>`;
@@ -470,7 +472,10 @@ function rowMatches(row) {
     if (!titleGroups.some(group => group.every(term => titleCombined.includes(term)))) return false;
   }
 
-  if (sSearch) {
+  if (selectedSubjectsFromUrl.length) {
+    const rowSubjects = SUBJECT_COLUMNS.map(c => norm(row[c] ?? "")).filter(Boolean);
+    if (!selectedSubjectsFromUrl.some(subject => rowSubjects.includes(subject))) return false;
+  } else if (sSearch) {
     const subjectCombined = norm(SUBJECT_COLUMNS.map(c => row[c] ?? "").join(" "));
     if (!subjectCombined.includes(sSearch)) return false;
   }
@@ -560,11 +565,26 @@ function showDetails(row) {
   document.getElementById("modalBackdrop").style.display = "block";
 }
 function closeModal() { document.getElementById("modalBackdrop").style.display = "none"; }
+
+function loadUrlSubjectFilter() {
+  const params = new URLSearchParams(window.location.search);
+  const subjectsParam = params.get("subjects");
+  if (!subjectsParam) return false;
+  const subjects = decodeURIComponent(subjectsParam)
+    .split("|")
+    .map(s => s.trim())
+    .filter(Boolean);
+  selectedSubjectsFromUrl = subjects.map(norm);
+  document.getElementById("subjectSearch").value = subjects.join(" | ");
+  return subjects.length > 0;
+}
 function resetFilters() {
   document.getElementById("authorSearch").value = "";
   document.querySelector('input[name="authorMode"][value="main"]').checked = true;
   document.getElementById("titleSearch").value = "";
   document.getElementById("subjectSearch").value = "";
+  selectedSubjectsFromUrl = [];
+  if (window.location.search) window.history.replaceState({}, "", window.location.pathname);
   sortCriteria = [{col: "PubId", dir: "asc"}];
   buildHeader();
   applyFilters();
@@ -585,7 +605,11 @@ function wireEvents() {
 }
 buildHeader();
 wireEvents();
-resetFilters();
+if (loadUrlSubjectFilter()) {
+  applyFilters();
+} else {
+  resetFilters();
+}
 
 </script>
 </body>
