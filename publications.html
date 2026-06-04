@@ -65,7 +65,7 @@
   }
   .control-grid {
     display: grid;
-    grid-template-columns: minmax(170px, 1.05fr) minmax(130px, .75fr) minmax(210px, 1.2fr) minmax(200px, 1.1fr) repeat(3, minmax(170px, .95fr)) auto;
+    grid-template-columns: minmax(170px, 1.1fr) minmax(130px, .75fr) minmax(230px, 1.35fr) minmax(230px, 1.35fr) auto;
     gap: 8px;
     align-items: end;
   }
@@ -181,6 +181,13 @@
     margin-left: 4px;
     font-weight: 700;
     color: #073b70;
+    white-space: nowrap;
+  }
+  .sort-hint {
+    display: inline-block;
+    margin-left: 4px;
+    font-weight: 700;
+    color: #7b8794;
     white-space: nowrap;
   }
 
@@ -317,7 +324,7 @@
         <button id="resetBtn">Reset</button>
       </div>
     </div>
-    <div class="status" id="status">Sorting: click a column header for ▲/▼. Shift+click or Ctrl+click adds sort 2 or 3.</div>
+    <div class="status" id="status">Sorting: every column header has ↕. Click a header to sort ▲/▼. Shift+click or Ctrl+click adds sort 2 or 3.</div>
   </section>
 
   <section class="table-shell">
@@ -387,7 +394,7 @@ function updateStickyColumns() {
 let sortCriteria = [{col: "PubId", dir: "asc"}];
 function sortMarkForHeader(h) {
   const index = sortCriteria.findIndex(c => c.col === h);
-  if (index === -1) return "";
+  if (index === -1) return ` <span class="sort-hint">↕</span>`;
   const arrow = sortCriteria[index].dir === "asc" ? "▲" : "▼";
   return ` <span class="sort-mark">${arrow}${index + 1}</span>`;
 }
@@ -419,7 +426,7 @@ function buildHeader() {
   VISIBLE_HEADERS.forEach((h, i) => {
     const th = document.createElement("th");
     th.innerHTML = headerHtml(h) + sortMarkForHeader(h);
-    th.title = "Click to sort. Shift+click or Ctrl+click adds sort 2 or 3.";
+    th.title = "Click to sort this column. Shift+click or Ctrl+click adds sort 2 or 3.";
     th.classList.add("sortable");
     th.style.width = (WIDTHS[h] || 120) + "px";
     th.style.minWidth = (WIDTHS[h] || 120) + "px";
