@@ -85,8 +85,6 @@
     min-height: 34px;
   }
   input, select { width: 100%; }
-  .sort-pair { display: grid; grid-template-columns: minmax(110px, 1fr) 78px; gap: 5px; }
-  .sort-pair select { min-width: 0; }
   .author-mode { display: flex; gap: 8px; align-items: center; min-height: 34px; }
   .author-mode label { display: inline-flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; font-weight: 600; white-space: nowrap; }
   .author-mode input { width: auto; min-height: auto; }
@@ -176,6 +174,16 @@
     z-index: 45;
     background: #dcecf8;
   }
+  th.sortable { cursor: pointer; user-select: none; }
+  th.sortable:hover { background: #d7eaf8; }
+  .sort-mark {
+    display: inline-block;
+    margin-left: 4px;
+    font-weight: 700;
+    color: #073b70;
+    white-space: nowrap;
+  }
+
   tbody tr:nth-child(even) td.sticky-col-1,
   tbody tr:nth-child(even) td.sticky-col-2 {
     background: #fbfcfd;
@@ -304,42 +312,12 @@
         <label for="subjectSearch">Subject descriptions</label>
         <input id="subjectSearch" placeholder="e.g. measurement of happiness">
       </div>
-      <div>
-        <label>Sort 1</label>
-        <div class="sort-pair">
-          <select id="sortCol1"></select>
-          <select id="sortDir1">
-            <option value="asc">A-Z</option>
-            <option value="desc">Z-A</option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <label>Sort 2</label>
-        <div class="sort-pair">
-          <select id="sortCol2"></select>
-          <select id="sortDir2">
-            <option value="asc">A-Z</option>
-            <option value="desc">Z-A</option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <label>Sort 3</label>
-        <div class="sort-pair">
-          <select id="sortCol3"></select>
-          <select id="sortDir3">
-            <option value="asc">A-Z</option>
-            <option value="desc">Z-A</option>
-          </select>
-        </div>
-      </div>
       <div class="small-actions">
         <button id="applyBtn">Apply</button>
         <button id="resetBtn">Reset</button>
       </div>
     </div>
-    <div class="status" id="status"></div>
+    <div class="status" id="status">Sorting: click a column header for ▲/▼. Shift+click or Ctrl+click adds sort 2 or 3.</div>
   </section>
 
   <section class="table-shell">
@@ -406,38 +384,50 @@ function updateStickyColumns() {
   if (!firstHeader) return;
   document.documentElement.style.setProperty('--sticky-col1-width', Math.ceil(firstHeader.getBoundingClientRect().width) + 'px');
 }
+let sortCriteria = [{col: "PubId", dir: "asc"}];
+function sortMarkForHeader(h) {
+  const index = sortCriteria.findIndex(c => c.col === h);
+  if (index === -1) return "";
+  const arrow = sortCriteria[index].dir === "asc" ? "▲" : "▼";
+  return ` <span class="sort-mark">${arrow}${index + 1}</span>`;
+}
+function handleHeaderSort(header, event) {
+  const existingIndex = sortCriteria.findIndex(c => c.col === header);
+  const additive = event.shiftKey || event.ctrlKey;
+
+  if (!additive) {
+    if (existingIndex === 0) {
+      sortCriteria[0].dir = sortCriteria[0].dir === "asc" ? "desc" : "asc";
+    } else {
+      sortCriteria = [{col: header, dir: "asc"}];
+    }
+  } else {
+    if (existingIndex >= 0) {
+      sortCriteria[existingIndex].dir = sortCriteria[existingIndex].dir === "asc" ? "desc" : "asc";
+    } else {
+      if (sortCriteria.length >= 3) sortCriteria.pop();
+      sortCriteria.push({col: header, dir: "asc"});
+    }
+  }
+  page = 1;
+  buildHeader();
+  applyFilters(false);
+}
 function buildHeader() {
   const tr = document.getElementById("theadRow");
   tr.innerHTML = "";
   VISIBLE_HEADERS.forEach((h, i) => {
     const th = document.createElement("th");
-    th.innerHTML = headerHtml(h);
+    th.innerHTML = headerHtml(h) + sortMarkForHeader(h);
+    th.title = "Click to sort. Shift+click or Ctrl+click adds sort 2 or 3.";
+    th.classList.add("sortable");
     th.style.width = (WIDTHS[h] || 120) + "px";
     th.style.minWidth = (WIDTHS[h] || 120) + "px";
+    th.addEventListener("click", e => handleHeaderSort(h, e));
     if (i === 0) th.classList.add("sticky-col-1");
     if (i === 1) th.classList.add("sticky-col-2");
     tr.appendChild(th);
   });
-
-  for (let i = 1; i <= 3; i++) {
-    const sort = document.getElementById(`sortCol${i}`);
-    sort.innerHTML = "";
-    if (i > 1) {
-      const none = document.createElement("option");
-      none.value = "";
-      none.textContent = "No extra sort";
-      sort.appendChild(none);
-    }
-    for (const h of VISIBLE_HEADERS) {
-      const opt = document.createElement("option");
-      opt.value = h;
-      opt.textContent = h.replace(/_/g, " ");
-      sort.appendChild(opt);
-    }
-  }
-  document.getElementById("sortCol1").value = "PubId";
-  document.getElementById("sortCol2").value = "";
-  document.getElementById("sortCol3").value = "";
   updateStickyColumns();
 }
 function splitSearchTerms(value) { return norm(value).split(";").map(s => s.trim()).filter(Boolean); }
@@ -483,13 +473,7 @@ function compareRows(a,b,col,dir) {
   return dir === "desc" ? -result : result;
 }
 function getSortCriteria() {
-  const criteria = [];
-  for (let i = 1; i <= 3; i++) {
-    const col = document.getElementById(`sortCol${i}`).value;
-    const dir = document.getElementById(`sortDir${i}`).value || "asc";
-    if (col) criteria.push({col, dir});
-  }
-  return criteria.length ? criteria : [{col: "PubId", dir: "asc"}];
+  return sortCriteria.length ? sortCriteria : [{col: "PubId", dir: "asc"}];
 }
 function compareRowsMulti(a, b, criteria) {
   for (const {col, dir} of criteria) {
@@ -498,10 +482,10 @@ function compareRowsMulti(a, b, criteria) {
   }
   return compareRows(a, b, "PubId", "asc");
 }
-function applyFilters() {
+function applyFilters(resetPage = true) {
   const criteria = getSortCriteria();
   filtered = DATA.filter(rowMatches).sort((a,b) => compareRowsMulti(a,b,criteria));
-  page = 1;
+  if (resetPage) page = 1;
   render();
 }
 function render() {
@@ -566,12 +550,8 @@ function resetFilters() {
   document.querySelector('input[name="authorMode"][value="main"]').checked = true;
   document.getElementById("titleSearch").value = "";
   document.getElementById("subjectSearch").value = "";
-  document.getElementById("sortCol1").value = "PubId";
-  document.getElementById("sortDir1").value = "asc";
-  document.getElementById("sortCol2").value = "";
-  document.getElementById("sortDir2").value = "asc";
-  document.getElementById("sortCol3").value = "";
-  document.getElementById("sortDir3").value = "asc";
+  sortCriteria = [{col: "PubId", dir: "asc"}];
+  buildHeader();
   applyFilters();
 }
 function wireEvents() {
@@ -584,10 +564,6 @@ function wireEvents() {
     });
   }
   document.querySelectorAll('input[name="authorMode"]').forEach(el => el.addEventListener("change", applyFilters));
-  for (let i = 1; i <= 3; i++) {
-    document.getElementById(`sortCol${i}`).addEventListener("change", applyFilters);
-    document.getElementById(`sortDir${i}`).addEventListener("change", applyFilters);
-  }
   document.getElementById("modalClose").addEventListener("click", closeModal);
   document.getElementById("modalBackdrop").addEventListener("click", e => { if (e.target.id === "modalBackdrop") closeModal(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
