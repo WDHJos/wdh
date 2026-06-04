@@ -21,6 +21,7 @@
     color: #1f2933;
     background: white;
     overflow: hidden;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .topnav {
     position: sticky;
@@ -45,7 +46,7 @@
     background: white;
   }
   .page {
-    padding: 14px;
+    padding: 14px 14px 22px 14px;
   }
   h1 {
     margin: 8px 0 12px 0;
@@ -64,7 +65,7 @@
   }
   .control-grid {
     display: grid;
-    grid-template-columns: minmax(170px, 1.15fr) minmax(130px, .8fr) minmax(220px, 1.35fr) minmax(210px, 1.25fr) minmax(150px, .9fr) minmax(95px, .55fr) auto;
+    grid-template-columns: minmax(170px, 1.05fr) minmax(130px, .75fr) minmax(210px, 1.2fr) minmax(200px, 1.1fr) repeat(3, minmax(170px, .95fr)) auto;
     gap: 8px;
     align-items: end;
   }
@@ -84,9 +85,8 @@
     min-height: 34px;
   }
   input, select { width: 100%; }
-  #sortCol, #sortDir { width: auto; min-width: 0; }
-  #sortCol { min-width: 150px; }
-  #sortDir { min-width: 95px; }
+  .sort-pair { display: grid; grid-template-columns: minmax(110px, 1fr) 78px; gap: 5px; }
+  .sort-pair select { min-width: 0; }
   .author-mode { display: flex; gap: 8px; align-items: center; min-height: 34px; }
   .author-mode label { display: inline-flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; font-weight: 600; white-space: nowrap; }
   .author-mode input { width: auto; min-height: auto; }
@@ -112,7 +112,7 @@
   }
   .table-scroll {
     width: 100%;
-    height: calc(100vh - 235px);
+    height: calc(100vh - 275px);
     overflow: auto;
     position: relative;
   }
@@ -193,9 +193,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
-    padding: 8px;
+    padding: 8px 8px max(22px, calc(8px + env(safe-area-inset-bottom, 0px))) 8px;
     border-top: 1px solid var(--border);
     background: #fafbfc;
+    min-height: 58px;
   }
   .pagination button {
     min-width: 34px;
@@ -304,15 +305,34 @@
         <input id="subjectSearch" placeholder="e.g. measurement of happiness">
       </div>
       <div>
-        <label for="sortCol">Sort column</label>
-        <select id="sortCol"></select>
+        <label>Sort 1</label>
+        <div class="sort-pair">
+          <select id="sortCol1"></select>
+          <select id="sortDir1">
+            <option value="asc">A-Z</option>
+            <option value="desc">Z-A</option>
+          </select>
+        </div>
       </div>
       <div>
-        <label for="sortDir">Direction</label>
-        <select id="sortDir">
-          <option value="asc">A-Z</option>
-          <option value="desc">Z-A</option>
-        </select>
+        <label>Sort 2</label>
+        <div class="sort-pair">
+          <select id="sortCol2"></select>
+          <select id="sortDir2">
+            <option value="asc">A-Z</option>
+            <option value="desc">Z-A</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label>Sort 3</label>
+        <div class="sort-pair">
+          <select id="sortCol3"></select>
+          <select id="sortDir3">
+            <option value="asc">A-Z</option>
+            <option value="desc">Z-A</option>
+          </select>
+        </div>
       </div>
       <div class="small-actions">
         <button id="applyBtn">Apply</button>
@@ -399,15 +419,25 @@ function buildHeader() {
     tr.appendChild(th);
   });
 
-  const sort = document.getElementById("sortCol");
-  sort.innerHTML = "";
-  for (const h of VISIBLE_HEADERS) {
-    const opt = document.createElement("option");
-    opt.value = h;
-    opt.textContent = h.replace(/_/g, " ");
-    sort.appendChild(opt);
+  for (let i = 1; i <= 3; i++) {
+    const sort = document.getElementById(`sortCol${i}`);
+    sort.innerHTML = "";
+    if (i > 1) {
+      const none = document.createElement("option");
+      none.value = "";
+      none.textContent = "No extra sort";
+      sort.appendChild(none);
+    }
+    for (const h of VISIBLE_HEADERS) {
+      const opt = document.createElement("option");
+      opt.value = h;
+      opt.textContent = h.replace(/_/g, " ");
+      sort.appendChild(opt);
+    }
   }
-  sort.value = "PubId";
+  document.getElementById("sortCol1").value = "PubId";
+  document.getElementById("sortCol2").value = "";
+  document.getElementById("sortCol3").value = "";
   updateStickyColumns();
 }
 function splitSearchTerms(value) { return norm(value).split(";").map(s => s.trim()).filter(Boolean); }
@@ -452,10 +482,25 @@ function compareRows(a,b,col,dir) {
     : norm(av).localeCompare(norm(bv), "en", {numeric: true, sensitivity: "base"});
   return dir === "desc" ? -result : result;
 }
+function getSortCriteria() {
+  const criteria = [];
+  for (let i = 1; i <= 3; i++) {
+    const col = document.getElementById(`sortCol${i}`).value;
+    const dir = document.getElementById(`sortDir${i}`).value || "asc";
+    if (col) criteria.push({col, dir});
+  }
+  return criteria.length ? criteria : [{col: "PubId", dir: "asc"}];
+}
+function compareRowsMulti(a, b, criteria) {
+  for (const {col, dir} of criteria) {
+    const result = compareRows(a, b, col, dir);
+    if (result !== 0) return result;
+  }
+  return compareRows(a, b, "PubId", "asc");
+}
 function applyFilters() {
-  const col = document.getElementById("sortCol").value || "PubId";
-  const dir = document.getElementById("sortDir").value || "asc";
-  filtered = DATA.filter(rowMatches).sort((a,b) => compareRows(a,b,col,dir));
+  const criteria = getSortCriteria();
+  filtered = DATA.filter(rowMatches).sort((a,b) => compareRowsMulti(a,b,criteria));
   page = 1;
   render();
 }
@@ -521,8 +566,12 @@ function resetFilters() {
   document.querySelector('input[name="authorMode"][value="main"]').checked = true;
   document.getElementById("titleSearch").value = "";
   document.getElementById("subjectSearch").value = "";
-  document.getElementById("sortCol").value = "PubId";
-  document.getElementById("sortDir").value = "asc";
+  document.getElementById("sortCol1").value = "PubId";
+  document.getElementById("sortDir1").value = "asc";
+  document.getElementById("sortCol2").value = "";
+  document.getElementById("sortDir2").value = "asc";
+  document.getElementById("sortCol3").value = "";
+  document.getElementById("sortDir3").value = "asc";
   applyFilters();
 }
 function wireEvents() {
@@ -535,8 +584,10 @@ function wireEvents() {
     });
   }
   document.querySelectorAll('input[name="authorMode"]').forEach(el => el.addEventListener("change", applyFilters));
-  document.getElementById("sortCol").addEventListener("change", applyFilters);
-  document.getElementById("sortDir").addEventListener("change", applyFilters);
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`sortCol${i}`).addEventListener("change", applyFilters);
+    document.getElementById(`sortDir${i}`).addEventListener("change", applyFilters);
+  }
   document.getElementById("modalClose").addEventListener("click", closeModal);
   document.getElementById("modalBackdrop").addEventListener("click", e => { if (e.target.id === "modalBackdrop") closeModal(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
