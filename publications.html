@@ -312,8 +312,8 @@
         </div>
       </div>
       <div>
-        <label for="titleSearch">Title terms (; separated)</label>
-        <input id="titleSearch" placeholder="e.g. happiness; life satisfaction">
+        <label for="titleSearch">Title terms (; = OR, & = AND)</label>
+        <input id="titleSearch" placeholder="e.g. happiness & elderly; life satisfaction & ageing">
       </div>
       <div>
         <label for="subjectSearch">Subject descriptions</label>
@@ -437,12 +437,17 @@ function buildHeader() {
   });
   updateStickyColumns();
 }
-function splitSearchTerms(value) { return norm(value).split(";").map(s => s.trim()).filter(Boolean); }
+function splitTitleSearchGroups(value) {
+  return norm(value)
+    .split(";")
+    .map(group => group.split("&").map(term => term.trim()).filter(Boolean))
+    .filter(group => group.length > 0);
+}
 function rowMatches(row) {
   const authorTerm = normNoSpace(document.getElementById("authorSearch").value);
   const checked = document.querySelector('input[name="authorMode"]:checked');
   const authorMode = checked ? checked.value : "main";
-  const titleTerms = splitSearchTerms(document.getElementById("titleSearch").value);
+  const titleGroups = splitTitleSearchGroups(document.getElementById("titleSearch").value);
   const sSearch = norm(document.getElementById("subjectSearch").value);
 
   const authors = row["AUTHORS"] ?? "";
@@ -457,9 +462,12 @@ function rowMatches(row) {
     }
   }
 
-  if (titleTerms.length) {
+  if (titleGroups.length) {
     const titleCombined = norm((row["TITLE ORIGINAL"] ?? "") + " " + (row["TITLE ENGLISH TRANSLATED"] ?? ""));
-    if (!titleTerms.some(term => titleCombined.includes(term))) return false;
+    // Semicolon separates OR-groups. Ampersand inside a group means all terms must be present.
+    // Example: happiness & elderly; life satisfaction & ageing
+    // matches titles containing either both happiness+elderly OR both life satisfaction+ageing.
+    if (!titleGroups.some(group => group.every(term => titleCombined.includes(term)))) return false;
   }
 
   if (sSearch) {
