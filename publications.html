@@ -325,7 +325,7 @@
         <button id="resetBtn">Reset</button>
       </div>
     </div>
-    <div class="status" id="status">Sorting: every column header has ↕. Click a header to sort ▲/▼. Shift+click or Ctrl+click adds sort 2 or 3.</div>
+    <div class="status" id="status">Sorting: click column headers to build sort 1, 2 and 3. Click the same header again to switch ▲/▼.</div>
   </section>
 
   <section class="table-shell">
@@ -402,22 +402,21 @@ function sortMarkForHeader(h) {
 }
 function handleHeaderSort(header, event) {
   const existingIndex = sortCriteria.findIndex(c => c.col === header);
-  const additive = event.shiftKey || event.ctrlKey;
 
-  if (!additive) {
-    if (existingIndex === 0) {
-      sortCriteria[0].dir = sortCriteria[0].dir === "asc" ? "desc" : "asc";
-    } else {
-      sortCriteria = [{col: header, dir: "asc"}];
-    }
+  // Tablet-friendly multi-sort:
+  // - click a new column: add it as sort 1, 2 or 3
+  // - click an already selected column: toggle A-Z / Z-A
+  // - when 3 sort columns are already present, a new column replaces sort 3
+  if (existingIndex >= 0) {
+    sortCriteria[existingIndex].dir = sortCriteria[existingIndex].dir === "asc" ? "desc" : "asc";
   } else {
-    if (existingIndex >= 0) {
-      sortCriteria[existingIndex].dir = sortCriteria[existingIndex].dir === "asc" ? "desc" : "asc";
+    if (sortCriteria.length >= 3) {
+      sortCriteria[2] = {col: header, dir: "asc"};
     } else {
-      if (sortCriteria.length >= 3) sortCriteria.pop();
       sortCriteria.push({col: header, dir: "asc"});
     }
   }
+
   page = 1;
   buildHeader();
   applyFilters(false);
@@ -428,7 +427,7 @@ function buildHeader() {
   VISIBLE_HEADERS.forEach((h, i) => {
     const th = document.createElement("th");
     th.innerHTML = headerHtml(h) + sortMarkForHeader(h);
-    th.title = "Click to sort this column. Shift+click or Ctrl+click adds sort 2 or 3.";
+    th.title = "Click a column to add it as sort 1, 2 or 3. Click the same column again to switch A-Z / Z-A.";
     th.classList.add("sortable");
     th.style.width = (WIDTHS[h] || 120) + "px";
     th.style.minWidth = (WIDTHS[h] || 120) + "px";
