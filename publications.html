@@ -27,8 +27,10 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    height: var(--nav-h);
+    min-height: var(--nav-h);
+    height: auto;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     padding: 8px 14px;
@@ -292,6 +294,9 @@
 <nav class="topnav">
   <a href="index.html">HOME</a>
   <a href="bibliography.html">BIBLIOGRAPHY</a>
+  <a href="about_publications.html">ABOUT THE PUBLICATIONS</a>
+  <a href="search.html">SEARCH THIS WEBSITE</a>
+  <a href="search_help.html">HOW TO SEARCH</a>
   <a href="publications.html" class="active">PUBLICATIONS</a>
   <a href="subjects.html">SUBJECTS</a>
 </nav>
@@ -302,8 +307,8 @@
   <section class="controls">
     <div class="control-grid">
       <div>
-        <label for="authorSearch">Author</label>
-        <input id="authorSearch" placeholder="e.g. veenhoven">
+        <label for="authorSearch">Author (; = OR for All authors)</label>
+        <input id="authorSearch" placeholder="e.g. veenhoven; burger">
       </div>
       <div>
         <label>Author search in</label>
@@ -445,7 +450,10 @@ function splitTitleSearchGroups(value) {
     .filter(group => group.length > 0);
 }
 function rowMatches(row) {
-  const authorTerm = normNoSpace(document.getElementById("authorSearch").value);
+  const authorTerms = document.getElementById("authorSearch").value
+    .split(";")
+    .map(term => normNoSpace(term))
+    .filter(Boolean);
   const checked = document.querySelector('input[name="authorMode"]:checked');
   const authorMode = checked ? checked.value : "main";
   const titleGroups = splitTitleSearchGroups(document.getElementById("titleSearch").value);
@@ -455,11 +463,14 @@ function rowMatches(row) {
   const mainAuthor = normNoSpace(getMainAuthor(authors));
   const allAuthors = normNoSpace(authors);
 
-  if (authorTerm) {
+  if (authorTerms.length) {
     if (authorMode === "main") {
-      if (!mainAuthor.startsWith(authorTerm)) return false;
+      // Main author: each term is matched against the beginning of the main author's family name.
+      if (!authorTerms.some(term => mainAuthor.startsWith(term))) return false;
     } else {
-      if (!allAuthors.includes(authorTerm)) return false;
+      // All authors: semicolon separates OR-search terms.
+      // Example: veenhoven; burger matches publications containing either author name.
+      if (!authorTerms.some(term => allAuthors.includes(term))) return false;
     }
   }
 
