@@ -1,100 +1,161 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Bibliography of Happiness</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About the Bibliography</title>
 <style>
-body { font-family: Arial; margin:0; background:#f4f6f8; }
-
-header { 
-  background:#002b5c; 
-  color:white; 
-  padding:20px; 
+:root {
+  --nav-h: 48px;
+  --border: #d4d9df;
+  --blue: #0b67c2;
+  --nav-bg: #d9ecff;
+  --text: #1f2933;
 }
-
-/* MENU */
-.menu { 
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  background: #ffffff;
+}
+.topnav {
   position: sticky;
   top: 0;
-  background:#cfe8ff; 
-  padding:10px; 
-  display:flex; 
-  gap:20px;
-  z-index:1000;
+  z-index: 50;
+  min-height: var(--nav-h);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--nav-bg);
+  border-bottom: 1px solid #b7d5f5;
 }
-
-.menu a { 
-  text-decoration:none; 
-  color:#003366; 
-  font-weight:bold; 
+.topnav a {
+  text-decoration: none;
+  color: #073b70;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
 }
-
-/* CONTENT */
-.container { 
-  padding:20px; 
-  max-width:900px; 
+.topnav a.active, .topnav a:hover { background: white; }
+.page {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 24px 18px 40px;
 }
-
-h2 { margin-top:20px; }
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 18px; }
+h2 { font-size: 22px; margin: 28px 0 10px; }
+h3 { font-size: 18px; margin: 20px 0 8px; }
+p { margin: 0 0 14px; }
+ul { margin-top: 8px; }
+.lead { font-size: 18px; }
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f9fbfd;
+  padding: 16px 18px;
+  margin: 18px 0;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+table.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 22px;
+  font-size: 15px;
+}
+.info-table th, .info-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.info-table th { background: #eef5fc; }
+a { color: var(--blue); }
+.footer {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 18px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: #46515c;
+}
+@media (max-width: 760px) {
+  .two-col { grid-template-columns: 1fr; }
+  .topnav a { font-size: 13px; padding: 7px 9px; }
+  h1 { font-size: 25px; }
+}
 </style>
 </head>
-
 <body>
+<nav class="topnav">
+  <a href="index.html">HOME</a>
+  <a href="bibliography.html" class="active">BIBLIOGRAPHY</a>
+  <a href="about_publications.html">ABOUT THE PUBLICATIONS</a>
+  <a href="search.html">SEARCH THIS WEBSITE</a>
+  <a href="search_help.html">HOW TO SEARCH</a>
+  <a href="publications.html">PUBLICATIONS</a>
+  <a href="subjects.html">SUBJECTS</a>
+</nav>
+<main class="page">
 
-<header>
-<h1>World Database of Happiness – Bibliography</h1>
-</header>
-
-<div class="menu">
-<a href="index.html">HOME</a>
-<a href="bibliography.html">BIBLIOGRAPHY</a>
-<a href="publications.html">PUBLICATIONS</a>
+<h1>About the Bibliography</h1>
+<p>The bibliography originates from the World Database of Happiness, developed at Erasmus University Rotterdam.</p>
+<p>The original database was created to collect and organize scientific publications concerning happiness as the subjective enjoyment of life as a whole.</p>
+<p>The scope of the present website is to continue this bibliographic work and to provide researchers, students, policy makers and interested citizens with easy access to the scientific literature on happiness. It involves any scientific publication that refers to the subjective appreciation of life as a whole, even if this subject is only a side issue. Priority is given to publications with empirical results.</p>
+<p>Not included are related fields such as mental health, social adjustment, alienation, and satisfaction with domains of life.</p>
+<h2>About the Publications Table</h2>
+<p>The <a href="publications.html">Publications</a> page contains a searchable table of scientific publications. Information available on each publication can be found in the following columns.</p>
+<div class="two-col">
+  <div>
+    <h3>General information</h3>
+    <table class="info-table">
+      <tr><th>Column header</th><th>Meaning</th></tr>
+      <tr><td><strong>Pub ID</strong></td><td>ID number of the publication</td></tr>
+      <tr><td><strong>Title Original</strong></td><td>Title of the publication</td></tr>
+      <tr><td><strong>Title English Translated</strong></td><td>English translation of the title, where available</td></tr>
+      <tr><td><strong>Authors</strong></td><td>Main author and co-authors</td></tr>
+      <tr><td><strong>Publication Year</strong></td><td>Year of publication</td></tr>
+      <tr><td><strong>Language</strong></td><td>Language of the publication</td></tr>
+      <tr><td><strong>Source</strong></td><td>Journal, dissertation, book, report, or other source</td></tr>
+      <tr><td><strong>URL</strong></td><td>Link to the publication, where available</td></tr>
+      <tr><td><strong>DOI</strong></td><td>DOI link to the publication, where available</td></tr>
+      <tr><td><strong>Input Date</strong></td><td>Date on which the publication was added to this website</td></tr>
+      <tr><td><strong>Remarks</strong></td><td>Additional remarks, if any</td></tr>
+    </table>
+  </div>
+  <div>
+    <h3>Classification</h3>
+    <table class="info-table">
+      <tr><th>Column header</th><th>Meaning</th></tr>
+      <tr><td><strong>Determinant</strong></td><td>Publication deals with determinants of happiness</td></tr>
+      <tr><td><strong>Consequence</strong></td><td>Publication deals with consequences of happiness</td></tr>
+      <tr><td><strong>Contentment</strong></td><td>Publication deals with contentment</td></tr>
+      <tr><td><strong>Overall</strong></td><td>Publication deals with overall happiness</td></tr>
+      <tr><td><strong>Hedonic</strong></td><td>Publication deals with hedonic level</td></tr>
+      <tr><td><strong>Contains Data</strong></td><td>Publication contains data</td></tr>
+      <tr><td><strong>Subject 1</strong></td><td>First WDH subject description</td></tr>
+      <tr><td><strong>Subject 2</strong></td><td>Second WDH subject description</td></tr>
+      <tr><td><strong>Subject 3</strong></td><td>Third WDH subject description</td></tr>
+      <tr><td><strong>Subject 4</strong></td><td>Fourth WDH subject description</td></tr>
+      <tr><td><strong>Subject 5</strong></td><td>Fifth WDH subject description</td></tr>
+    </table>
+  </div>
 </div>
 
-<div class="container">
-
-<h2>What is this Bibliography of Happiness?</h2>
-
-<p>
-A collection of scientific publications on happiness, defined as the subjective enjoyment of one’s life-as-a-whole.
-</p>
-
-<h2>Scope</h2>
-<p>
-Any scientific publication that refers to the subjective appreciation of life-as-a-whole, even if this subject is only a side-issue.
-</p>
-
-<p>
-Not included are related fields like mental health, social adjustment, alienation and satisfaction with domains of life.
-</p>
-
-<h2>Coverage at 1-7-2020</h2>
-<ul>
-<li>About 15000 publications</li>
-<li>Almost complete coverage of social-science literature up to 2019</li>
-<li>Includes journal articles, books, dissertations, conference papers and research reports</li>
-</ul>
-
-<h2>Descriptives</h2>
-<ul>
-<li>Author, title, source, year</li>
-<li>Language</li>
-<li>Type of study</li>
-<li>Subject classification (±450 categories)</li>
-</ul>
-
-<h2>Classification of empirical studies</h2>
-<ul>
-<li>Time frame: past / present / future</li>
-<li>Variant: overall happiness / hedonic level / contentment</li>
-</ul>
-
-<p>
-The World Database of Happiness is based at EHERO, Erasmus University Rotterdam.
-</p>
-
-</div>
-
+</main>
+<footer class="footer">
+  Erasmus Happiness Economics Research Organization (EHERO)<br>
+  Erasmus University Rotterdam, The Netherlands<br>
+  Director: Martijn Burger
+</footer>
 </body>
 </html>
