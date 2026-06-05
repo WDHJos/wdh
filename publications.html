@@ -325,7 +325,7 @@
         <button id="resetBtn">Reset</button>
       </div>
     </div>
-    <div class="status" id="status">Sorting: click column headers to build sort 1, 2 and 3. Click the same header again to switch ▲/▼.</div>
+    <div class="status" id="status">Sorting: click column headers to build sort 1, 2 and 3. Click the same header again to switch ▲/▼. If no column is selected, Pub ID is used as default order.</div>
   </section>
 
   <section class="table-shell">
@@ -392,7 +392,7 @@ function updateStickyColumns() {
   if (!firstHeader) return;
   document.documentElement.style.setProperty('--sticky-col1-width', Math.ceil(firstHeader.getBoundingClientRect().width) + 'px');
 }
-let sortCriteria = [{col: "PubId", dir: "asc"}];
+let sortCriteria = [];
 let selectedSubjectsFromUrl = [];
 function sortMarkForHeader(h) {
   const index = sortCriteria.findIndex(c => c.col === h);
@@ -584,7 +584,7 @@ function resetFilters() {
   document.getElementById("subjectSearch").value = "";
   selectedSubjectsFromUrl = [];
   if (window.location.search) window.history.replaceState({}, "", window.location.pathname);
-  sortCriteria = [{col: "PubId", dir: "asc"}];
+  sortCriteria = [];
   buildHeader();
   applyFilters();
 }
