@@ -1,71 +1,129 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>World Database of Happiness</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Database of Happiness – Publications</title>
 <style>
-body { font-family: Arial; margin:0; background:#f4f6f8; }
-header { background:#002b5c; color:white; padding:20px; }
-
-.menu { background:#cfe8ff; padding:10px; display:flex; gap:20px; }
-.menu a { text-decoration:none; color:#003366; font-weight:bold; }
-
-.container { padding:20px; max-width:900px; }
-h2 { margin-top:20px; }
+:root {
+  --nav-h: 48px;
+  --border: #d4d9df;
+  --blue: #0b67c2;
+  --nav-bg: #d9ecff;
+  --text: #1f2933;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  background: #ffffff;
+}
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  min-height: var(--nav-h);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--nav-bg);
+  border-bottom: 1px solid #b7d5f5;
+}
+.topnav a {
+  text-decoration: none;
+  color: #073b70;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.topnav a.active, .topnav a:hover { background: white; }
+.page {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 24px 18px 40px;
+}
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 18px; }
+h2 { font-size: 22px; margin: 28px 0 10px; }
+h3 { font-size: 18px; margin: 20px 0 8px; }
+p { margin: 0 0 14px; }
+ul { margin-top: 8px; }
+.lead { font-size: 18px; }
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f9fbfd;
+  padding: 16px 18px;
+  margin: 18px 0;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+table.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 22px;
+  font-size: 15px;
+}
+.info-table th, .info-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.info-table th { background: #eef5fc; }
+a { color: var(--blue); }
+.footer {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 18px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: #46515c;
+}
+@media (max-width: 760px) {
+  .two-col { grid-template-columns: 1fr; }
+  .topnav a { font-size: 13px; padding: 7px 9px; }
+  h1 { font-size: 25px; }
+}
 </style>
 </head>
-
 <body>
+<nav class="topnav">
+  <a href="index.html" class="active">HOME</a>
+  <a href="bibliography.html">BIBLIOGRAPHY</a>
+  <a href="about_publications.html">ABOUT THE PUBLICATIONS</a>
+  <a href="search.html">SEARCH THIS WEBSITE</a>
+  <a href="search_help.html">HOW TO SEARCH</a>
+  <a href="publications.html">PUBLICATIONS</a>
+  <a href="subjects.html">SUBJECTS</a>
+</nav>
+<main class="page">
 
-<header>
-<h1>World Database of Happiness</h1>
-<p>Archive of research findings on subjective enjoyment of life</p>
-</header>
-
-<div class="menu">
-<a href="index.html">Home</a>
-<a href="bibliography.html">Bibliography</a>
-<a href="publications.html">Publications</a>
+<h1>World Database of Happiness – Publications</h1>
+<p class="lead">Welcome to the World Database of Happiness – Publications.</p>
+<p>This website continues the Bibliography section of the original World Database of Happiness (WDH), founded by Professor Ruut Veenhoven. The original WDH contains scientific knowledge on happiness as the subjective enjoyment of life as a whole and includes bibliographic information, research findings, studies, and happiness measures.</p>
+<p>Not included are related fields such as mental health, social adjustment, alienation, and satisfaction with domains of life.</p>
+<p>The original World Database of Happiness is no longer being expanded and has been frozen as a historical archive. However, it remains available online for consultation.</p>
+<p>The present website continues and expands the Bibliography section of the World Database of Happiness, presented as an Excel list. It contains the complete bibliography of the original WDH and is continuously supplemented with new scientific publications, particularly publications published after 2020.</p>
+<p>Users interested in studies, findings, and happiness measures are referred to the original World Database of Happiness.</p>
+<div class="card">
+  <h2>Start here</h2>
+  <p>Use the <a href="publications.html">Publications</a> page to search the publication table, or use the <a href="subjects.html">Subjects</a> page to find standard WDH subject descriptions by keyword.</p>
 </div>
 
-<div class="container">
-
-<h2>Harvesting Happiness Research</h2>
-
-<p>
-In order to get happier, we must know what makes us happy. Policy makers must know in what kinds of societies and organizations people feel happiest. Individuals must know what ways of life tend to add most to the happiness of their kind of people.
-</p>
-
-<p>
-Scientific research on happiness is booming, but its results are difficult to overview due to differences in terminology and the growing number of studies, now exceeding 800 per year.
-</p>
-
-<p>
-In the World Database of Happiness, we gather research findings on happiness in the sense of life satisfaction. These findings are described in a standard format and terminology and organized by subject, place, time, and methodology.
-</p>
-
-<h2>How to search in this source</h2>
-
-<h2>Size of the collections</h2>
-<ul>
-<li>17877 Publications in Bibliography of Happiness</li>
-<li>23632 Distributional findings</li>
-<li>24413 Correlational findings</li>
-</ul>
-
-<h2>How does it work</h2>
-<ul>
-<li>Selection on concept</li>
-<li>Selection on valid measurement</li>
-<li>Extraction of research findings</li>
-</ul>
-
-<p>
-The World Database of Happiness is based at EHERO, Erasmus University Rotterdam, The Netherlands. Director: Ruut Veenhoven.
-</p>
-
-</div>
-
+</main>
+<footer class="footer">
+  Erasmus Happiness Economics Research Organization (EHERO)<br>
+  Erasmus University Rotterdam, The Netherlands<br>
+  Director: Martijn Burger
+</footer>
 </body>
 </html>
