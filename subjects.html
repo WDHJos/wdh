@@ -23,8 +23,10 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    height: var(--nav-h);
+    min-height: var(--nav-h);
+    height: auto;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     padding: 8px 14px;
@@ -139,6 +141,9 @@
 <nav class="topnav">
   <a href="index.html">HOME</a>
   <a href="bibliography.html">BIBLIOGRAPHY</a>
+  <a href="about_publications.html">ABOUT THE PUBLICATIONS</a>
+  <a href="search.html">SEARCH THIS WEBSITE</a>
+  <a href="search_help.html">HOW TO SEARCH</a>
   <a href="publications.html">PUBLICATIONS</a>
   <a href="subjects.html" class="active">SUBJECTS</a>
 </nav>
