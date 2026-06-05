@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search This Website</title>
+<style>
+:root {
+  --nav-h: 48px;
+  --border: #d4d9df;
+  --blue: #0b67c2;
+  --nav-bg: #d9ecff;
+  --text: #1f2933;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  background: #ffffff;
+}
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  min-height: var(--nav-h);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--nav-bg);
+  border-bottom: 1px solid #b7d5f5;
+}
+.topnav a {
+  text-decoration: none;
+  color: #073b70;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.topnav a.active, .topnav a:hover { background: white; }
+.page {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 24px 18px 40px;
+}
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 18px; }
+h2 { font-size: 22px; margin: 28px 0 10px; }
+h3 { font-size: 18px; margin: 20px 0 8px; }
+p { margin: 0 0 14px; }
+ul { margin-top: 8px; }
+.lead { font-size: 18px; }
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f9fbfd;
+  padding: 16px 18px;
+  margin: 18px 0;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+table.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 22px;
+  font-size: 15px;
+}
+.info-table th, .info-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.info-table th { background: #eef5fc; }
+a { color: var(--blue); }
+.footer {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 18px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: #46515c;
+}
+@media (max-width: 760px) {
+  .two-col { grid-template-columns: 1fr; }
+  .topnav a { font-size: 13px; padding: 7px 9px; }
+  h1 { font-size: 25px; }
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html">HOME</a>
+  <a href="bibliography.html">BIBLIOGRAPHY</a>
+  <a href="about_publications.html">ABOUT THE PUBLICATIONS</a>
+  <a href="search.html" class="active">SEARCH THIS WEBSITE</a>
+  <a href="search_help.html">HOW TO SEARCH</a>
+  <a href="publications.html">PUBLICATIONS</a>
+  <a href="subjects.html">SUBJECTS</a>
+</nav>
+<main class="page">
+
+<h1>Search This Website</h1>
+<h2>What can be found</h2>
+<p>This website is a collection of publications as described on the <a href="about_publications.html">About the Publications</a> page. It can be searched by title, by main author or all authors, and by subjects. A combination of main author or all authors with title and subjects is possible.</p>
+<p>For practical instructions, see <a href="search_help.html">How to Search</a>.</p>
+<p>All publications before and including 2020 can also be searched under Studies and Findings on the original World Database of Happiness website. Publications after 2020 are coded by subject, but no further studies have been conducted on them.</p>
+<h2>Search by subject</h2>
+<p>The six basic categories — Determinant, Consequence, Contentment, Overall, Hedonic, and Contains Data — can be used by sorting these columns on the <a href="publications.html">Publications</a> page to obtain a first selection of desired publications.</p>
+<p>A more substantive selection can be performed by searching with the subject description.</p>
+<p>To find a subject description, go to the <a href="subjects.html">Subjects</a> page. This page contains the subject table with keywords. Use keyword searches to find possible subject descriptions.</p>
+<p>In the table, the standard WDH subject description is shown together with the corresponding keywords. The subject descriptions themselves have also been added as keywords. In this way, you only need to search for keywords to find the subject description.</p>
+
+</main>
+<footer class="footer">
+  Erasmus Happiness Economics Research Organization (EHERO)<br>
+  Erasmus University Rotterdam, The Netherlands<br>
+  Director: Martijn Burger
+</footer>
+</body>
+</html>
