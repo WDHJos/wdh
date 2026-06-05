@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Search</title>
+<style>
+:root {
+  --nav-h: 48px;
+  --border: #d4d9df;
+  --blue: #0b67c2;
+  --nav-bg: #d9ecff;
+  --text: #1f2933;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  background: #ffffff;
+}
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  min-height: var(--nav-h);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--nav-bg);
+  border-bottom: 1px solid #b7d5f5;
+}
+.topnav a {
+  text-decoration: none;
+  color: #073b70;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.topnav a.active, .topnav a:hover { background: white; }
+.page {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 24px 18px 40px;
+}
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 18px; }
+h2 { font-size: 22px; margin: 28px 0 10px; }
+h3 { font-size: 18px; margin: 20px 0 8px; }
+p { margin: 0 0 14px; }
+ul { margin-top: 8px; }
+.lead { font-size: 18px; }
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #f9fbfd;
+  padding: 16px 18px;
+  margin: 18px 0;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+table.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 22px;
+  font-size: 15px;
+}
+.info-table th, .info-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.info-table th { background: #eef5fc; }
+a { color: var(--blue); }
+.footer {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 18px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: #46515c;
+}
+@media (max-width: 760px) {
+  .two-col { grid-template-columns: 1fr; }
+  .topnav a { font-size: 13px; padding: 7px 9px; }
+  h1 { font-size: 25px; }
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html">HOME</a>
+  <a href="bibliography.html">BIBLIOGRAPHY</a>
+  <a href="about_publications.html">ABOUT THE PUBLICATIONS</a>
+  <a href="search.html">SEARCH THIS WEBSITE</a>
+  <a href="search_help.html" class="active">HOW TO SEARCH</a>
+  <a href="publications.html">PUBLICATIONS</a>
+  <a href="subjects.html">SUBJECTS</a>
+</nav>
+<main class="page">
+
+<h1>How to Search</h1>
+<h2>Search by author</h2>
+<h3>Main author</h3>
+<p>Enter the first letters of the family name. The search returns all main authors whose family name begins with the entered letters.</p>
+<div class="card">
+  <p><strong>Example:</strong> input <strong>Ott</strong> returns Ott, Otto, Ottens, Ottaviani, but not Scott.</p>
+  <p><strong>Example:</strong> input <strong>Ot</strong> returns Ott, Otto, Ottens, Ottaviani, but not Scott.</p>
+</div>
+<h3>All authors</h3>
+<p>Enter part of a family name or several names separated by semicolons (;). The search scans all author fields.</p>
+<div class="card">
+  <p><strong>Example:</strong> input <strong>Ouweneel</strong> returns Ouweneel.</p>
+  <p><strong>Example:</strong> input <strong>Ouwe</strong> may return Ouweneel, Boelhouwer, vanHouwen, and similar names.</p>
+</div>
+<h2>Search by title</h2>
+<p>Enter one or more words from the title. The title search supports the following options:</p>
+<table class="info-table">
+  <tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr>
+  <tr><td><strong>;</strong></td><td>OR filter</td><td><strong>happiness; life satisfaction</strong> returns titles with either happiness or life satisfaction.</td></tr>
+  <tr><td><strong>&amp;</strong></td><td>AND filter</td><td><strong>happiness &amp; elderly</strong> returns only titles in which both terms occur.</td></tr>
+</table>
+<p>Author and title searches can be combined.</p>
+<h2>Search by subject</h2>
+<p>The website provides a subject table with WDH standard subject descriptions and keywords.</p>
+<p>Enter a keyword in the search field of the <a href="subjects.html">Subjects</a> table. The corresponding subject will appear. If you then return to the <a href="publications.html">Publications</a> table, this table is automatically filtered based on the selected standard subjects.</p>
+<h2>Filter and sort publications</h2>
+<p>Publications can be filtered or sorted by the following classification columns:</p>
+<ul>
+  <li>Determinant</li>
+  <li>Consequence</li>
+  <li>Contentment</li>
+  <li>Overall Happiness</li>
+  <li>Hedonic Level</li>
+  <li>Contains Data</li>
+</ul>
+<h2>Sorting three columns at a time</h2>
+<p>All columns can be sorted by means of the arrow to the right of the header name. The first sort is indicated by number 1, the second by number 2, and the third by number 3.</p>
+<h2>Reset</h2>
+<p>All search and sort activities can be cleared with the reset button.</p>
+
+</main>
+<footer class="footer">
+  Erasmus Happiness Economics Research Organization (EHERO)<br>
+  Erasmus University Rotterdam, The Netherlands<br>
+  Director: Martijn Burger
+</footer>
+</body>
+</html>
