@@ -1,0 +1,23 @@
+﻿COLUMN_NAME,DESCRIPTION,INSTRUCTIONS
+PUB_ID,,As reserved
+TITLE ORIGINAL,,Title in English if Original titel is not English then the Enhlish translated title. Title case convention
+TITLE ENGLISH TRANSLATED.,,Title in original language
+AUTHORS,,"Main Author en Co-Authors separated by ; all Authors with Full first name,  one Initional with '.' for second name if available. If Full first name not available then Initionals. Two co- authors maximum"
+YEAR_PUB,,Publication year
+LANGUAGE,,English name for language
+SOURCE,,See instuctions underneath
+URL,,The URL of the publication
+DOI,,"Searche for DOI in the publication, very important"
+TEXTFILE,,Pub_Id number followed by .pdf
+DATE IN,,The date of input in the format Month/Day/Year
+REMARKS,,If any
+DETERMINANT,,This is a Category: Yes if it is a Determinent
+CONCEQUENCE,,This is a Category: Yes if itcontaind concequences
+HEDONIC,,This is a Category: Yes if it Hedonic
+CONTENT,,This is a Category: Yes if life satisfaction
+CONTAINS DATA,,This is a Category:  Yes if publication contains measured or …..... Data
+SUBJECT_1,,Subject as agreed on
+SUBJECT_2,,Subject as agreed on
+SUBJECT_3,,Subject as agreed on
+SUBJECT_4,,Subject as agreed on
+SUBJECT_5,,Subject as agreed on
